@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAVEN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #status {
+            position: absolute;
+            bottom: 40px;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        #name {
+            position: absolute;
+            top: 40px;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+            font-size: 28px;
+            letter-spacing: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="name">H.A.V.E.N</div>
+    <canvas id="neural"></canvas>
+    <div id="status">IDLE</div>
+
+    <script>
+        const canvas = document.getElementById('neural');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Nodes
+        const nodes = [];
+        const numNodes = 60;
+        const connectionDistance = 150;
+
+        // Colors
+        const idleColor = '#00ffff';
+        const listeningColor = '#00ff88';
+        const speakingColor = '#ff6600';
+
+        let currentColor = idleColor;
+        let state = 'idle'; // idle, listening, speaking
+
+        // Create nodes
+        for (let i = 0; i < numNodes; i++) {
+            nodes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.8,
+                vy: (Math.random() - 0.5) * 0.8,
+                radius: Math.random() * 3 + 1
+            });
+        }
+
+        function drawNetwork() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw connections
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        const opacity = 1 - distance / connectionDistance;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.strokeStyle = currentColor;
+                        ctx.globalAlpha = opacity * 0.6;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                ctx.fillStyle = currentColor;
+                ctx.globalAlpha = 0.9;
+                ctx.fill();
+            });
+
+            ctx.globalAlpha = 1;
+        }
+
+        function updateNodes() {
+            nodes.forEach(node => {
+                node.x += node.vx;
+                node.y += node.vy;
+
+                // Bounce off walls
+                if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+
+                // Speed up when speaking
+                if (state === 'speaking') {
+                    node.vx *= 1.002;
+                    node.vy *= 1.002;
+                } else {
+                    node.vx *= 0.999;
+                    node.vy *= 0.999;
+                }
+            });
+        }
+
+        function animate() {
+            drawNetwork();
+            updateNodes();
+            requestAnimationFrame(animate);
+        }
+
+        // State control functions
+        function setIdle() {
+            state = 'idle';
+            currentColor = idleColor;
+            document.getElementById('status').textContent = 'IDLE';
+        }
+
+        function setListening() {
+            state = 'listening';
+            currentColor = listeningColor;
+            document.getElementById('status').textContent = 'LISTENING';
+        }
+
+        function setSpeaking() {
+            state = 'speaking';
+            currentColor = speakingColor;
+            document.getElementById('status').textContent = 'SPEAKING';
+        }
+
+        // Start animation
+        animate();
+
+        // Poll Flask server for state changes
+        function pollState() {
+            fetch('http://localhost:5000/state')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.state === 'listening') setListening();
+                    else if (data.state === 'speaking') setSpeaking();
+                    else setIdle();
+                })
+                .catch(() => {
+                // Server not running yet, stay idle
+                setIdle();
+            });
+    }
+    // Check state every 500ms
+    setInterval(pollState, 500);
+
+    </script>
+</body>
+</html>

@@ -1,281 +1,156 @@
-import ollama
-import json
-import os
-import whisper
-import speech_recognition as sr
-import requests
-import edge_tts
-import asyncio
-import pygame
-import tempfile
-import pyautogui
-import subprocess
-import webbrowser
+# H.A.V.E.N - Main Program
+# Built by Dev Harsha
+# Inspired by Dev Harsha & Geetanjali
 
-# Flask state
+import ollama
+import requests
+from config import (
+    ASSISTANT_NAME,
+    AI_MODEL,
+    SYSTEM_PROMPT,
+    FLASK_PORT,
+    FLASK_HOST,
+    SHUTDOWN_WORD,
+)
+from voice import speak, listen, wait_for_wake_word
+from memory import load_profiles, save_message, identify_user, get_history
+from controls import computer_control
+from security import (
+    log_startup,
+    log_user_login,
+    log_command,
+    log_conversation,
+    log_wake_word,
+    log_shutdown,
+    check_suspicious_command,
+    log_info,
+    log_error
+)
+
+# ─────────────────────────────────────────
+# FLASK STATE
+# ─────────────────────────────────────────
+
 def set_state(state):
+    """Update HAVEN's visual state via Flask."""
     try:
-        requests.post(f"http://localhost:5000/set/{state}")
+        requests.post(f"http://{FLASK_HOST}:{FLASK_PORT}/set/{state}")
     except:
         pass
 
-# Voice output
-def speak(text):
-    async def _speak():
-        communicator = edge_tts.Communicate(text, voice="en-US-JennyNeural")
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as f:
-            temp_file = f.name
-        await communicator.save(temp_file)
-        
-        pygame.mixer.init()
-        pygame.mixer.music.load(temp_file)
-        pygame.mixer.music.play()
-        
-        while pygame.mixer.music.get_busy():
-            pygame.time.Clock().tick(10)
-        
-        pygame.mixer.quit()
-    
-    asyncio.run(_speak())
+# ─────────────────────────────────────────
+# AI RESPONSE
+# ─────────────────────────────────────────
 
-# Voice input setup
-recognizer = sr.Recognizer()
-whisper_model = whisper.load_model("base")
-
-def listen():
-    set_state("listening")
-    with sr.Microphone() as source:
-        print("Listening...")
-        recognizer.adjust_for_ambient_noise(source, duration=1)
-        audio = recognizer.listen(source, phrase_time_limit=10)
-    
-    with open("temp_audio.wav", "wb") as f:
-        f.write(audio.get_wav_data())
-    
-    result = whisper_model.transcribe("temp_audio.wav", language="en")
-    text = result["text"].strip()
-    
-    # Fix common misheard words
-    text = text.replace("Heaven", "HAVEN")
-    text = text.replace("heaven", "HAVEN")
-    text = text.replace("Haven", "HAVEN")
-    
-    if text:
-        print(f"You said: {text}")
-        return text
-    else:
-        speak("Sorry, I didn't catch that.")
-        return None
-
-# Wake word detection
-def wait_for_wake_word():
-    print("Waiting for wake word... Say 'Engage'")
-    set_state("idle")
-    
-    while True:
-        with sr.Microphone() as source:
-            recognizer.adjust_for_ambient_noise(source, duration=0.5)
-            audio = recognizer.listen(source, phrase_time_limit=3)
-        
-        with open("temp_audio.wav", "wb") as f:
-            f.write(audio.get_wav_data())
-        
-        result = whisper_model.transcribe("temp_audio.wav", language="en")
-        text = result["text"].strip().lower()
-        
-        print(f"Heard: {text}")
-        
-        if "engage" in text:
-            speak("Yes, I'm listening.")
-            set_state("listening")
-            return
-
-# Computer Controls
-def computer_control(command):
-    command = command.lower()
-
-    if "open chrome" in command or "open brave" in command:
-        subprocess.Popen(r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe")
-        return "Opening Brave."
-    
-    elif "open notepad" in command:
-        subprocess.Popen("notepad.exe")
-        return "Opening Notepad."
-    
-    elif "open vs code" in command or "open visual studio" in command:
-        subprocess.Popen("code.exe")
-        return "Opening VS Code."
-
-    elif "open file explorer" in command or "open files" in command:
-        subprocess.Popen("explorer.exe")
-        return "Opening File Explorer."
-
-    elif "open task manager" in command:
-        subprocess.Popen("taskmgr.exe")
-        return "Opening Task Manager."
-
-    elif "search" in command:
-        query = command.replace("search", "").strip()
-        webbrowser.open(f"https://www.google.com/search?q={query}")
-        return f"Searching for {query}."
-
-    elif "open youtube" in command:
-        webbrowser.open("https://www.youtube.com")
-        return "Opening YouTube."
-
-    elif "open github" in command:
-        webbrowser.open("https://www.github.com")
-        return "Opening GitHub."
-
-    elif "open google" in command:
-        webbrowser.open("https://www.google.com")
-        return "Opening Google."
-
-    elif "volume up" in command:
-        for _ in range(5):
-            pyautogui.press("volumeup")
-        return "Volume increased."
-
-    elif "volume down" in command:
-        for _ in range(5):
-            pyautogui.press("volumedown")
-        return "Volume decreased."
-
-    elif "mute" in command:
-        pyautogui.press("volumemute")
-        return "Muted."
-
-    elif "take screenshot" in command or "screenshot" in command:
-        screenshot = pyautogui.screenshot()
-        screenshot.save("haven_screenshot.png")
-        return "Screenshot taken and saved."
-
-    elif "shutdown" in command:
-        speak("Shutting down your computer.")
-        os.system("shutdown /s /t 5")
-        return "Shutting down."
-
-    elif "restart" in command:
-        speak("Restarting your computer.")
-        os.system("shutdown /r /t 5")
-        return "Restarting."
-    
-    elif "close brave" in command or "close chrome" in command:
-        os.system("taskkill /f /im brave.exe")
-        return "Closing Brave."
-    
-    elif "close notepad" in command:
-        os.system("taskkill /f /im notepad.exe")
-        return "Closing Notepad."
-    
-    elif "close vs code" in command:
-        os.system("taskkill /f /im code.exe")
-        return "Closing VS Code."
-    
-    elif "close file explorer" in command:
-        os.system("taskkill /f /im explorer.exe")
-        return "Closing File Explorer."
-    
-    elif "close task manager" in command:
-        os.system("taskkill /f /im taskmgr.exe")
-        return "Closing Task Manager."
-    
-    elif "close youtube" in command:
-        os.system("taskkill /f /im brave.exe")
-        return "Closing YouTube."
-        
-    else:
-        return None
-
-# User Profiles
-def load_profiles():
-    if os.path.exists("profiles.json"):
-        with open("profiles.json","r") as f:
-            return json.load(f)
-    return {}
-
-# Save Profiles
-def save_profiles(profiles):
-    with open("profiles.json", "w") as f:
-        json.dump(profiles, f, indent=4)
-
-# Identification
-def identify_user(profiles):
-    name = input("HAVEN: Hello! Who am I talking to? \nYou: ")
-
-    if name in profiles:
-        print(f"HAVEN: Welcome back, {name}! Good to see you again.")
-    else:
-        print(f"HAVEN: Nice to meet you, {name}! I'll remember you from now on.")
-        profiles[name] = {"name": name, "conversations": []}
-        save_profiles(profiles)
-
-    return name, profiles
-
-# Ask HAVEN
 def ask_haven(user_input, user_name, profiles):
+    """Send user input to Llama3 and get HAVEN's response."""
     set_state("speaking")
-    history = profiles[user_name]["conversations"]
 
-    history.append({
-        "role": "user",
-        "content": user_input
-    })
+    try:
+        history = get_history(profiles, user_name)
 
-    response = ollama.chat(
-        model="llama3",
-        messages=[
-            {
-                "role": "system",
-                "content": f"""You are HAVEN, a calm, smart, modern female AI companion and guide.
-                You are currently talking to {user_name}.
-                You speak casually and honestly like a real friend.
-                You are not just an assistant - you are a guide.
-                Keep responses short and clear unless asked for detail.
-                Never be formal or robotic.
-                You can be dramatic sometimes."""
-            }
-        ] + history
-    )
+        response = ollama.chat(
+            model=AI_MODEL,
+            messages=[
+                {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT.format(user_name=user_name)
+                }
+            ] + history + [
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ]
+        )
 
-    haven_response = response['message']['content']
+        haven_response = response['message']['content']
 
-    history.append({
-        "role": "assistant",
-        "content": haven_response
-    })
+        # Save to memory
+        profiles = save_message(profiles, user_name, "user", user_input)
+        profiles = save_message(profiles, user_name, "assistant", haven_response)
 
-    profiles[user_name]["conversations"] = history
-    save_profiles(profiles)
+        # Log conversation
+        log_conversation(user_name, user_input, haven_response)
 
-    return haven_response
+        return haven_response, profiles
 
-# Main program
-profiles = load_profiles()
-user_name, profiles = identify_user(profiles)
+    except Exception as e:
+        log_error(f"AI response failed: {e}")
+        return "I'm having trouble thinking right now. Please try again.", profiles
 
-print(f"\nHAVEN is online. Waiting for wake word.\n")
-speak(f"Welcome back {user_name}. Say Engage whenever you need me.")
+# ─────────────────────────────────────────
+# MAIN PROGRAM
+# ─────────────────────────────────────────
 
-while True:
-    wait_for_wake_word()
-    user_input = listen()
+def main():
+    # Startup
+    log_startup()
+    log_info(f"{ASSISTANT_NAME} is initializing...")
 
-    if user_input is None:
-        continue
+    # Load profiles and identify user
+    profiles = load_profiles()
+    user_name, profiles = identify_user(profiles)
+    log_user_login(user_name, True)
 
-    if "dismiss" in user_input.lower():
-        speak("Understood. I'll be here when you need me.")
-        break
-
-    control_result = computer_control(user_input)
-    if control_result:
-        print(f"HAVEN: {control_result}\n")
-        speak(control_result)
-        set_state("idle")
-        continue
-
-    response = ask_haven(user_input, user_name, profiles)
-    print(f"HAVEN: {response}\n")
-    speak(response)
+    # Welcome
+    print(f"\n{ASSISTANT_NAME} is online. Say '{ASSISTANT_NAME}' to wake her up.\n")
+    speak(f"Welcome back {user_name}. I am online and ready. Say Engage whenever you need me.")
     set_state("idle")
+
+    # ── Main Loop ──
+    while True:
+        try:
+            # Wait for wake word
+            set_state("idle")
+            wait_for_wake_word()
+            log_wake_word("engage")
+
+            # Listen for command
+            set_state("listening")
+            user_input = listen()
+
+            if user_input is None:
+                log_info("No input detected, returning to idle.")
+                continue
+
+            # Check shutdown word
+            if SHUTDOWN_WORD in user_input.lower():
+                speak("Understood. Going to sleep. Call me whenever you need me.")
+                log_shutdown(user_name)
+                break
+
+            # Check for suspicious commands
+            if check_suspicious_command(user_input):
+                speak("I'm sorry, I can't execute that command.")
+                set_state("idle")
+                continue
+
+            # Check computer control
+            control_response = computer_control(user_input)
+            if control_response:
+                print(f"{ASSISTANT_NAME}: {control_response}\n")
+                speak(control_response)
+                log_command(user_name, user_input, control_response)
+                set_state("idle")
+                continue
+
+            # Send to AI
+            haven_response, profiles = ask_haven(user_input, user_name, profiles)
+            print(f"{ASSISTANT_NAME}: {haven_response}\n")
+            speak(haven_response)
+            set_state("idle")
+
+        except KeyboardInterrupt:
+            speak("Shutting down. Goodbye.")
+            log_shutdown(user_name)
+            break
+
+        except Exception as e:
+            log_error(f"Unexpected error in main loop: {e}")
+            speak("Something went wrong. I'm recovering.")
+            set_state("idle")
+            continue
+
+if __name__ == "__main__":
+    main()

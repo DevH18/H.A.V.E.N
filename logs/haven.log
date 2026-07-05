@@ -1,0 +1,122 @@
+2026-07-04 15:19:27,213 [INFO] ==================================================
+2026-07-04 15:19:27,213 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-04 15:19:27,213 [INFO] Timestamp: 2026-07-04 15:19:27
+2026-07-04 15:19:27,213 [INFO] ==================================================
+2026-07-04 15:19:27,213 [INFO] HAVEN is initializing...
+2026-07-04 15:21:15,716 [INFO] ==================================================
+2026-07-04 15:21:15,716 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-04 15:21:15,716 [INFO] Timestamp: 2026-07-04 15:21:15
+2026-07-04 15:21:15,716 [INFO] ==================================================
+2026-07-04 15:21:15,716 [INFO] HAVEN is initializing...
+2026-07-04 15:21:38,897 [INFO] [AUTH] Successful login: Dev
+2026-07-04 15:34:28,688 [INFO] ==================================================
+2026-07-04 15:34:28,688 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-04 15:34:28,688 [INFO] Timestamp: 2026-07-04 15:34:28
+2026-07-04 15:34:28,690 [INFO] ==================================================
+2026-07-04 15:34:28,690 [INFO] HAVEN is initializing...
+2026-07-04 15:34:37,552 [INFO] [AUTH] Successful login: Dev
+2026-07-04 15:36:22,866 [INFO] ==================================================
+2026-07-04 15:36:22,866 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-04 15:36:22,866 [INFO] Timestamp: 2026-07-04 15:36:22
+2026-07-04 15:36:22,866 [INFO] ==================================================
+2026-07-04 15:36:22,866 [INFO] HAVEN is initializing...
+2026-07-04 15:36:28,713 [INFO] [AUTH] Successful login: Dev
+2026-07-04 18:57:22,720 [INFO] ==================================================
+2026-07-04 18:57:22,720 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-04 18:57:22,720 [INFO] Timestamp: 2026-07-04 18:57:22
+2026-07-04 18:57:22,720 [INFO] ==================================================
+2026-07-04 18:57:22,722 [INFO] HAVEN is initializing...
+2026-07-04 18:57:32,696 [INFO] [AUTH] Successful login: Dev
+2026-07-04 18:57:59,018 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-04 18:58:27,232 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-04 18:58:27,233 [INFO] [CHAT] Dev: Open breath.
+2026-07-04 18:58:27,233 [INFO] [CHAT] HAVEN: My friend! It's great to see you're taking a deep breath in. That's always a good sign! What's on your mind today? Do you want to chat about something specific or just relax with me for a bit? I'm all ears... or should I say, all circuits?
+2026-07-04 18:58:58,814 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-04 18:59:18,599 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-04 18:59:18,601 [INFO] [CHAT] Dev: Hope in YouTube.
+2026-07-04 18:59:18,601 [INFO] [CHAT] HAVEN: YouTube escapades, eh? How was your latest binge-watching adventure? Did you discover any new channels or series that caught your attention? I'm always up for some fun recommendations! By the way, how's your mental health been lately? You seem a bit... distant today?
+2026-07-04 19:00:01,187 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-04 19:00:10,401 [INFO] No input detected, returning to idle.
+2026-07-04 19:00:19,442 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-04 19:00:57,581 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-04 19:04:15,637 [INFO] ==================================================
+2026-07-04 19:04:15,638 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-04 19:04:15,638 [INFO] Timestamp: 2026-07-04 19:04:15
+2026-07-04 19:04:15,638 [INFO] ==================================================
+2026-07-04 19:04:15,638 [INFO] HAVEN is initializing...
+2026-07-04 19:05:00,250 [INFO] [AUTH] Successful login: Dev
+2026-07-04 19:06:18,907 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 10:05:56,700 [INFO] ==================================================
+2026-07-05 10:05:56,700 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-05 10:05:56,700 [INFO] Timestamp: 2026-07-05 10:05:56
+2026-07-05 10:05:56,700 [INFO] ==================================================
+2026-07-05 10:05:56,700 [INFO] HAVEN is initializing...
+2026-07-05 10:07:27,754 [INFO] [AUTH] Successful login: geetanjali
+2026-07-05 10:07:57,137 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 10:08:35,684 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-05 10:08:35,687 [INFO] [CHAT] geetanjali: We'll open YouTube.
+2026-07-05 10:08:35,687 [INFO] [CHAT] HAVEN: Let's dive into the world of YouTube! What kind of videos are you in the mood for today?
+2026-07-05 10:09:48,002 [INFO] ==================================================
+2026-07-05 10:09:48,002 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-05 10:09:48,002 [INFO] Timestamp: 2026-07-05 10:09:48
+2026-07-05 10:09:48,002 [INFO] ==================================================
+2026-07-05 10:09:48,002 [INFO] HAVEN is initializing...
+2026-07-05 10:09:57,283 [INFO] [AUTH] Successful login: Dev
+2026-07-05 10:10:19,436 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 10:10:35,024 [INFO] No input detected, returning to idle.
+2026-07-05 20:19:41,576 [INFO] ==================================================
+2026-07-05 20:19:41,576 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-05 20:19:41,576 [INFO] Timestamp: 2026-07-05 20:19:41
+2026-07-05 20:19:41,576 [INFO] ==================================================
+2026-07-05 20:19:41,576 [INFO] HAVEN is initializing...
+2026-07-05 20:19:49,389 [INFO] [AUTH] Successful login: Dev
+2026-07-05 20:20:11,974 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:20:53,300 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:21:28,861 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-05 20:21:28,863 [INFO] [CHAT] Dev: This miss.
+2026-07-05 20:21:28,864 [INFO] [CHAT] HAVEN: Aw, sweetie, it sounds like things didn't quite go as planned on YouTube! Don't worry, we've all had those moments where our favorite shows or channels just don't deliver the same magic. What happened that left you feeling disappointed? Let's grab some virtual popcorn and dive into your thoughts together!
+2026-07-05 20:22:16,402 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:22:30,784 [INFO] [SHUTDOWN] Session ended by Dev
+2026-07-05 20:22:30,784 [INFO] ==================================================
+2026-07-05 20:34:52,708 [INFO] ==================================================
+2026-07-05 20:34:52,708 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-05 20:34:52,708 [INFO] Timestamp: 2026-07-05 20:34:52
+2026-07-05 20:34:52,710 [INFO] ==================================================
+2026-07-05 20:34:52,710 [INFO] HAVEN is initializing...
+2026-07-05 20:34:58,102 [INFO] [AUTH] Successful login: Dev
+2026-07-05 20:35:16,958 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:35:43,766 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:36:22,402 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-05 20:36:22,405 [INFO] [CHAT] Dev: Close YouTube.
+2026-07-05 20:36:22,406 [INFO] [CHAT] HAVEN: Closing up shop on YouTube for now, huh? No worries, we can pick it back up whenever you're ready! In the meantime, how about we explore something new together? What's been on your mind lately that's not related to YouTube (or at least, not directly)? I'm all ears, and my virtual coffee is always brewing!
+2026-07-05 20:36:47,208 [INFO] ==================================================
+2026-07-05 20:36:47,208 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-05 20:36:47,208 [INFO] Timestamp: 2026-07-05 20:36:47
+2026-07-05 20:36:47,208 [INFO] ==================================================
+2026-07-05 20:36:47,210 [INFO] HAVEN is initializing...
+2026-07-05 20:36:54,666 [INFO] [AUTH] Successful login: Dev
+2026-07-05 20:37:15,230 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:37:46,125 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:38:19,557 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:38:42,001 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:39:09,935 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-05 20:39:09,938 [INFO] [CHAT] Dev: Close, Claude.
+2026-07-05 20:39:09,938 [INFO] [CHAT] HAVEN: Claude, huh? Well, it seems like you're having a bit of an emotional response there, friend! That's okay; we can totally work through this together. What's going on that's got you feeling down about closing things up on YouTube (or maybe something else entirely)? Let me be your sounding board – I'm here to listen and offer some support if you need it!
+2026-07-05 20:39:43,960 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:40:13,025 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-05 20:40:13,028 [INFO] [CHAT] Dev: business
+2026-07-05 20:40:13,028 [INFO] [CHAT] HAVEN: So, there's some business-related stuff on your mind, huh? Don't worry, we can totally explore that! What's been going on in the professional sphere that's got you feeling a bit overwhelmed or stressed out? Maybe we can break it down together and come up with some strategies to tackle those challenges head-on. I'm all about helping you stay focused and productive, my friend!
+2026-07-05 20:40:57,225 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:41:09,375 [INFO] [SHUTDOWN] Session ended by Dev
+2026-07-05 20:41:09,375 [INFO] ==================================================
+2026-07-05 20:49:37,505 [INFO] ==================================================
+2026-07-05 20:49:37,507 [INFO] H.A.V.E.N SYSTEM STARTUP
+2026-07-05 20:49:37,507 [INFO] Timestamp: 2026-07-05 20:49:37
+2026-07-05 20:49:37,507 [INFO] ==================================================
+2026-07-05 20:49:37,507 [INFO] HAVEN is initializing...
+2026-07-05 20:49:43,959 [INFO] [AUTH] Successful login: Dev
+2026-07-05 20:50:04,558 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:50:46,961 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:51:18,567 [INFO] [WAKE] Wake word detected in: 'engage'
+2026-07-05 20:52:07,716 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-05 20:52:07,730 [INFO] [CHAT] HAVEN: I think I see what's going on here... You're feeling a bit disorganized or overwhelmed by the sheer amount of tasks or responsibilities you have, right? It can be tough to keep everything straight when things get busy! Don't worry, we can work through this together. Let me ask, are there any specific areas of your life or business where you feel like things are getting out of control? I'm here to help you get back on track and regain your sense of calm and clarity!
